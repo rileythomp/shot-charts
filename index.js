@@ -1,5 +1,6 @@
 'use strict'
 
+const shell = require('shelljs');
 const nba = require('nba');
 const replaceColor = require('replace-color');
 
@@ -16,7 +17,7 @@ app.listen(PORT, function() {
 
 const length = 500;
 
-const partitions = 10;
+const partitions = 30;
 
 const partition_length = length/partitions;
 
@@ -27,7 +28,7 @@ const leftX = -250;
 const bottomY = -50;
 const rightX = 250;
 
-const player = nba.findPlayer('Rajon Rondo');
+const player = nba.findPlayer('Russell Westbrook');
 
 let params = {
 	PlayerID: player.playerId
@@ -35,13 +36,13 @@ let params = {
 
 let heatMap = {};
 
-for (let i = 1; i <= 100; ++i) {
+for (let i = 1; i <= num_cells; ++i) {
 	heatMap[i] = {made: 0, missed: 0};
 }
 
 function replace_color(image, replace) {
 	replaceColor({
-		image: './public/court_parts/' + image + '.png',
+		image: './public/court_bits/' + image + '.png',
 		colors: {
 			type: 'rgb',
 			targetColor: [255, 255, 255],
@@ -50,7 +51,7 @@ function replace_color(image, replace) {
 		deltaE: 10
 	})
 	.then((jimpObject) => {
-		jimpObject.write('./public/court_parts/' + image + '.png', (err) => {
+		jimpObject.write('./public/court_bits/' + image + '.png', (err) => {
 			if (err) { return console.log(err) }
 		})
 	})
@@ -82,7 +83,7 @@ function colorFromPercent(percent) {
 		return [0, 255, 0];
 	}
 	else {
-		return [255, 255, 255];
+		return [222, 184, 135];
 	}
 }
 
@@ -99,9 +100,17 @@ function abs(x) {
 	return (x >= 0 ? x : -1*x);
 }
 
+
+
 nba.stats.shots(params).then((res) => {
 	let shots = res.shot_Chart_Detail;
 	let num_shots = shots.length;
+
+	// shell.exec('./move_pics_script', function(code, stdout, stderr) {
+	// 	console.log('Exit code:', code);
+	// 	console.log('Program output:', stdout);
+	// 	console.log('Program stderr:', stderr);
+	// });
 
 	for (let i = 0; i < num_shots; ++i) {
 		let shot = shots[i];

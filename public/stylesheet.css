@@ -2,6 +2,7 @@ table {
     border-collapse: collapse;
 }
 
-td {
-    /* border: 1px solid black; */
+td, img {
+    margin: 0;
+    padding: 0;
 }

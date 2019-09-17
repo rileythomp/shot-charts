@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "nba": "^4.9.0",
-    "replace-color": "^2.1.0"
+    "replace-color": "^2.1.0",
+    "shelljs": "^0.8.3"
   }
 }

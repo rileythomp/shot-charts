@@ -1,0 +1,3 @@
+rm -rf ./public/court_bits/
+
+cp -r court_bits public/
