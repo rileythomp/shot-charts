@@ -1,0 +1,16 @@
+{
+  "name": "bball",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nba": "^4.9.0",
+    "replace-color": "^2.1.0"
+  }
+}
