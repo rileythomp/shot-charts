@@ -11,13 +11,32 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
 
 app.listen(PORT, function() {
-    console.log('Running on localhost:', PORT);
+    console.log('Running on localhost:' + PORT);
 });
 
-const player = nba.findPlayer('Lebron James');
+const length = 500;
+
+const partitions = 10;
+
+const partition_length = length/partitions;
+
+const num_cells = partitions*partitions;
+
+const topY = 450;
+const leftX = -250;
+const bottomY = -50;
+const rightX = 250;
+
+const player = nba.findPlayer('Rajon Rondo');
 
 let params = {
 	PlayerID: player.playerId
+}
+
+let heatMap = {};
+
+for (let i = 1; i <= 100; ++i) {
+	heatMap[i] = {made: 0, missed: 0};
 }
 
 function replace_color(image, replace) {
@@ -41,26 +60,26 @@ function replace_color(image, replace) {
 }
 
 function colorFromPercent(percent) {
-	if (percent <= 0.1) {
-		return [130, 224, 170];
+	if (percent > 0 && percent <= 0.1) {
+		return [255, 0, 0];
 	}
 	else if (percent >= 0.1 && percent <= 0.2) {
-		return [88, 214, 141];
+		return [255, 87, 0];
 	}
 	else if (percent >= 0.2 && percent <= 0.3) {
-		return [46, 204, 113];
+		return [255, 175, 0];
 	}
 	else if (percent >= 0.3 && percent <= 0.4) {
-		return [40, 180, 99];
+		return [255, 255, 0];
 	}
 	else if (percent >= 0.4 && percent <= 0.5) {
-		return [35, 155, 86];
+		return [159, 255, 86];
 	}
 	else if (percent >= 0.5 && percent <= 0.6) {
-		return [29, 131, 72];
+		return [71, 255, 0];
 	}
 	else if (percent >= 0.6) {
-		return [24, 106, 59];
+		return [0, 255, 0];
 	}
 	else {
 		return [255, 255, 255];
@@ -76,16 +95,8 @@ function updateMap(region, shot) {
 	}
 }
 
-let heatMap = {
-	1: {made: 0, missed: 0},
-	2: {made: 0, missed: 0},
-	3: {made: 0, missed: 0},
-	4: {made: 0, missed: 0},
-	5: {made: 0, missed: 0},
-	6: {made: 0, missed: 0},
-	7: {made: 0, missed: 0},
-	8: {made: 0, missed: 0},
-	9: {made: 0, missed: 0}
+function abs(x) {
+	return (x >= 0 ? x : -1*x);
 }
 
 nba.stats.shots(params).then((res) => {
@@ -94,61 +105,37 @@ nba.stats.shots(params).then((res) => {
 
 	for (let i = 0; i < num_shots; ++i) {
 		let shot = shots[i];
+		let yLoc = shot.locY;
+		let xLoc = shot.locX;
 
-		if (shot.locX >= -250 && shot.locX <= -83) {
-			// left side
-			if (shot.locY >= -50 && shot.locY <= 116) {
-				// low 
-				updateMap(3, shot)
-			}
-			else if (shot.locY >= 116 && shot.locY <= 283) {
-				// mid
-				updateMap(6, shot);
-			}
-			else if (shot.locY >= 283 && shot.locY <= 450) {
-				// deep
-				updateMap(9, shot);
-			}
+		if (yLoc > topY) {
+			yLoc = topY;
 		}
-		else if (shot.locX >= -83 && shot.locX <= 83) {
-			// middle
-			if (shot.locY >= -50 && shot.locY <= 116) {
-				// low 
-				updateMap(2, shot);
+		else if (yLoc < bottomY) {
+			yLoc = bottomY;
+		}
 
-			}
-			else if (shot.locY >= 116 && shot.locY <= 283) {
-				// mid
-				updateMap(5, shot);
-			}
-			else if (shot.locY >= 283 && shot.locY <= 450) {
-				// deep
-				updateMap(8, shot);
-			}
+		if (xLoc > rightX) {
+			xLoc = rightX;
 		}
-		else if (shot.locX >= 83 && shot.locX <= 250) {
-			// right side
-			if (shot.locY >= -50 && shot.locY <= 116) {
-				// low 
-				updateMap(1, shot);
-			}
-			else if (shot.locY >= 116 && shot.locY <= 283) {
-				// mid
-				updateMap(4, shot);
-			}
-			else if (shot.locY >= 283 && shot.locY <= 450) {
-				// deep
-				updateMap(7, shot);
-			}
+		else if (xLoc < leftX) {
+			xLoc = leftX;
 		}
+
+		// 0 is far right, 9 is far left
+		let col = Math.floor(abs((leftX - xLoc)/partition_length));
+
+		// 0 is top, 9 is bottom
+		let row = Math.floor(abs((topY - yLoc)/partition_length));
+
+		let index = row * partitions + col + 1;
+		updateMap(index, shot);
 	}
 
-	for (let i = 1; i <= 9; ++i) {
+	for (let i = 1; i <= num_cells; ++i) {
 		let percent = heatMap[i].made / (heatMap[i].made + heatMap[i].missed);
 
 		replace_color(i, colorFromPercent(percent));
-
-		console.log(i, heatMap[i].made / (heatMap[i].made + heatMap[i].missed));
 	}
 });
 

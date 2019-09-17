@@ -1,0 +1,6 @@
+i=1
+
+for name in *.png; do
+    mv $name $i.png
+    i=$((i + 1))
+done
