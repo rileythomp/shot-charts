@@ -81,7 +81,7 @@ let add_empty_chart = function(num_cells) {
 	}
 }
 
-exports.create_chart = async function(name) {
+exports.create_chart = function(name) {
 	const court_length = 500;
 	const partitions = 30;
 	const partition_length = court_length/partitions;
