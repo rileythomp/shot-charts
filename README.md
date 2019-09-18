@@ -1,4 +1,4 @@
-# basketball
+# shot-charts
 
 NBA player shooting charts
 
