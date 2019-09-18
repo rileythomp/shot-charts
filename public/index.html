@@ -1,13 +1,20 @@
 <html>
     <head>
-        <title>Bball</title>
+        <title>NBA Player Shot Charts</title>
         <link rel="stylesheet" href="stylesheet.css">
     </head>
     <body>
         <table id="map">
 
         </table>
+        <p id="chart-description"></p>
+        <div id="form-wrapper">
+            <form id="nameform">
+                <input id="playername" type="text" placeholder="Player name">
+            </form>
+            <div id="loader"></div>
+        </div>
     </body>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="main.js"></script>
 </html>
