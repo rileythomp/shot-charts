@@ -44,6 +44,8 @@ $('#nameform').submit(function(e){
         }
         , error: function(jqXHR, textStatus, err){
             console.error("Error: ", textStatus, err);
+            $('#loader').hide();
+            $('#load-msg').html('No player with that name was found');
         }
     })
 });  

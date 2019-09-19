@@ -1,7 +1,7 @@
 'use strict'
 
-const nba = require('nba');
 const replaceColor = require('replace-color');
+const nba = require('nba');
 const fs = require('fs')
 
 let color_from_percent = function(percent) {
@@ -28,7 +28,6 @@ let color_from_percent = function(percent) {
 	}
 	else {
 		return [222, 184, 135]; // burlywood
-		// return [150, 111, 51];
 	}
 }
 
@@ -56,7 +55,7 @@ let replace_color = function(image, replace) {
 }
 
 let remove_current_chart = function(num_cells) {
-	for (let i = 1; i <= num_cells; ++i) {
+	for (let i = 210; i <= num_cells-60; ++i) {
 		let path = './public/court_bits/' + i + '.png';
 
 		fs.unlink(path, (err) => {
@@ -69,7 +68,7 @@ let remove_current_chart = function(num_cells) {
 }
 
 let add_empty_chart = function(num_cells) {
-	for (let i = 1; i <= num_cells; ++i) {
+	for (let i = 210; i <= num_cells-60; ++i) {
 		let source = './court_bits/' + i + '.png';
 		let destination = './public/court_bits/' + i + '.png';
 
@@ -82,7 +81,7 @@ let add_empty_chart = function(num_cells) {
 	}
 }
 
-exports.create_chart = function(name) {
+exports.create_chart = function(player) {
 	const court_length = 500;
 	const partitions = 30;
 	const partition_length = court_length/partitions;
@@ -91,11 +90,11 @@ exports.create_chart = function(name) {
 	const leftX = -250;
 	const bottomY = -50;
 	const rightX = 250;
-
-	const player = nba.findPlayer(name);
+	
 	let params = {
 		PlayerID: player.playerId
 	}
+
 	let heatMap = {};
 	for (let i = 1; i <= num_cells; ++i) {
 		heatMap[i] = {made: 0, missed: 0};
@@ -105,6 +104,7 @@ exports.create_chart = function(name) {
 		let shots = res.shot_Chart_Detail;
 		let num_shots = shots.length;
 	
+		// map each x,y pair to one of the 900 cells
 		for (let i = 0; i < num_shots; ++i) {
 			let shot = shots[i];
 			let yLoc = shot.locY;
@@ -124,10 +124,10 @@ exports.create_chart = function(name) {
 				xLoc = leftX;
 			}
 	
-			// 0 is far right, 9 is far left
+			// 0 is far left
 			let col = Math.floor(Math.abs((leftX - xLoc)/partition_length));
 	
-			// 0 is top, 9 is bottom
+			// 0 is top
 			let row = Math.floor(Math.abs((topY - yLoc)/partition_length));
 	
 			let region = row * partitions + col + 1;
@@ -144,7 +144,7 @@ exports.create_chart = function(name) {
 
 		add_empty_chart(num_cells);
 
-		for (let i = 1; i <= num_cells; ++i) {
+		for (let i = 210; i <= num_cells-60; ++i) {
 			let percent = heatMap[i].made / (heatMap[i].made + heatMap[i].missed);
 			replace_color(i, color_from_percent(percent));
 		}

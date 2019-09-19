@@ -1,6 +1,7 @@
 'use strict'
 
 const shotChart = require('./shotchart')
+const nba = require('nba');
 var express = require('express');
 
 var app = express();
@@ -14,10 +15,18 @@ app.listen(PORT, function() {
 });
 
 app.post('/newplayerchart', function(req, res) {
-	shotChart.create_chart(req.body.name);
+	let player = nba.findPlayer(req.body.name);
 
-	// hacky way to wait for all cells color to be updated
-	setTimeout(function() {
-		res.sendStatus(200)
-	}, 7500);
+	if (player === undefined) {
+		res.status(500).send('Player not defined');
+	}
+	else {
+		shotChart.create_chart(player);
+
+		// hacky way to wait for all cells color to be updated
+		setTimeout(function() {
+			res.sendStatus(200)
+		}, 7500);
+	}
+
 });
