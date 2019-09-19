@@ -18,6 +18,6 @@ app.post('/newplayerchart', function(req, res) {
 
 	// hacky way to wait for all cells color to be updated
 	setTimeout(function() {
-		res.send(200)
+		res.sendStatus(200)
 	}, 7500);
 });

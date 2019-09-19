@@ -27,7 +27,8 @@ let color_from_percent = function(percent) {
 		return [0, 255, 0];
 	}
 	else {
-		return [222, 184, 135];
+		return [222, 184, 135]; // burlywood
+		// return [150, 111, 51];
 	}
 }
 
