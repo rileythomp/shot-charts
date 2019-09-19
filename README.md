@@ -1,6 +1,6 @@
 # shot-charts
 
-NBA player shooting charts
+Search for and download NBA player shooting charts.
 
 ![bballchart](screenshot.png)
 
