@@ -8,7 +8,7 @@ Deployed with Heroku at https://nbacharts.herokuapp.com/
 
 To run locally:
 
-```$ git clone https://github.com/rileythomp/basketball```
+```$ git clone https://github.com/rileythomp/basketball.git```
 
 ```$ cd basketball```
 
