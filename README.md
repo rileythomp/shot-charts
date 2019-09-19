@@ -1,6 +1,8 @@
 # shot-charts
 
-NBA player shooting charts
+🏀 Search for and download NBA player shooting charts.
+
+Deployed with Heroku at https://nbacharts.herokuapp.com/
 
 ![bballchart](screenshot.png)
 
@@ -13,3 +15,5 @@ To run locally:
 ```$ npm i```
 
 ```$ npm start```
+
+Then go to localhost:3000 in a browser.
