@@ -1,3 +1,16 @@
+body {
+  font-family: Arial;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.75) 100%), url("ballcourt.jpeg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h2 {
+  text-align: center;
+}
+
 table {
     border-collapse: collapse;
     width: 500px;
@@ -15,9 +28,23 @@ img {
     width: 1.5em;
 }
 
+#name-and-save {
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#save-button {
+  margin-left: 12%;
+  height: 2em;
+}
+
 #chart-description {
     font-family: Arial;
     text-align: center;
+    display: inline;
+    margin-left: 20%;
+    font-weight: bold;
 }
 
 input {
@@ -31,6 +58,11 @@ input {
     width: 20em;
     margin-left: auto;
     margin-right: auto;
+}
+
+#load-msg {
+  display: none;
+  text-align: center;
 }
 
 #loader {
