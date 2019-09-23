@@ -148,6 +148,5 @@ exports.create_chart = function(player) {
 			let percent = heatMap[i].made / (heatMap[i].made + heatMap[i].missed);
 			replace_color(i, color_from_percent(percent));
 		}
-		console.log('done replacing colors');
 	});
 }

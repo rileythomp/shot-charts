@@ -37,13 +37,10 @@ $('#nameform').submit(function(e){
         cache: false, 
         data: {name: pname}, 
         success: function(data){
-            console.log('inside success callback');
             localStorage.setItem('player_name', pname);
             $('#loader').hide();
             $('#load-msg').show();
-            console.log('refreshing');
             location = location;
-            console.log('refreshed');
         }
         , error: function(jqXHR, textStatus, err){
             console.error("Error: ", textStatus, err);
