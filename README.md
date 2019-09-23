@@ -2,8 +2,6 @@
 
 🏀 Search for and download NBA player shooting charts.
 
-Deployed with Heroku at https://nbacharts.herokuapp.com/
-
 ![bballchart](screenshot.png)
 
 To run locally:
