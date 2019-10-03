@@ -1,5 +1,0 @@
-RMDIR /Q/S public\court_bits
-
-MKDIR public\court_bits
-
-XCOPY court_bits public\court_bits\ /S/H/E/K/F/C

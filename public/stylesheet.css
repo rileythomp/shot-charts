@@ -1,6 +1,6 @@
 body {
   font-family: Arial;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.75) 100%), url("ballcourt.jpeg");
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.75) 100%), url('court_floor.jpg');
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -11,21 +11,21 @@ h2 {
   text-align: center;
 }
 
-table {
+#map {
     border-collapse: collapse;
-    width: 500px;
     margin-left: auto;
     margin-right: auto;
+    background-image: url('the_court.jpg'); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
-td, img {
+td {
     margin: 0;
     padding: 0;
-}
-
-img {
-    height: 1.5em;
     width: 1.5em;
+    height: 1.5em;
 }
 
 #name-and-save {

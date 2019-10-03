@@ -11,13 +11,8 @@ for (let i = 7; i < partitions-2; ++i) {
     let row = document.createElement('tr');
     for (let j = 0; j < partitions; ++j) {
         let cell = document.createElement('td');
-        let img = document.createElement('img');
-
-        let index = i*partitions + j + 1;
-
-        img.src = 'court_bits/' + index + '.png';
-
-        cell.appendChild(img);
+        cell.style.backgroundColor = 'burlywood';
+        cell.style.opacity = '0.5';
         row.appendChild(cell);
     }
     map.appendChild(row);
@@ -37,10 +32,24 @@ $('#nameform').submit(function(e){
         cache: false, 
         data: {name: pname}, 
         success: function(data){
-            localStorage.setItem('player_name', pname);
             $('#loader').hide();
             $('#load-msg').show();
-            location = location;
+
+            for (let i = 0; i < map.children.length; ++i) {
+                let row = map.children[i];
+                for (let j = 0; j < row.children.length; ++j) {
+                    let cell = row.children[j];
+
+                    let r = data[i*partitions + j + 1][0];
+                    let g = data[i*partitions + j + 1][1];
+                    let b = data[i*partitions + j + 1][2];
+
+                    cell.style.backgroundColor = 'rgb('+r+','+g+','+b+')';
+                }
+            }
+
+            $('#load-msg').hide();
+            $('#chart-description').html(pname);
         }
         , error: function(jqXHR, textStatus, err){
             console.error("Error: ", textStatus, err);
@@ -50,12 +59,16 @@ $('#nameform').submit(function(e){
     })
 });  
 
-$(window).on('load', function() {
-    $('#chart-description').html(localStorage.getItem('player_name'));
-})
-
 $('#save-button').on('click', function(e) {
     e.preventDefault();
+
+    let pname = $('#chart-description').text();
+
+    if (pname == '') {
+        $('#load-msg').html('No player selected');
+        $('#load-msg').show();
+        return;
+    }
 
     $('#load-msg').html('Saving chart...');
     $('#load-msg').show();
@@ -81,6 +94,6 @@ $('#save-button').on('click', function(e) {
         let img = canvas.toDataURL("image/png")
         let uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 
-        save_chart(uri, localStorage.getItem('player_name') + ' shot chart.png');
+        save_chart(uri, $('#chart-description').text() + ' shot chart.png');
     });
 }); 
