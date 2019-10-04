@@ -1,11 +1,7 @@
-let map = document.getElementById('map');
-const partitions = 30;
-
-String.prototype.capitalize = function(lower) {
-    return (lower ? this.toLowerCase() : this).replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-};
-
 $('#loader').hide();
+
+let map = document.getElementById('map');
+const partitions = 50;
 
 for (let i = 7; i < partitions-2; ++i) {
     let row = document.createElement('tr');
@@ -18,8 +14,12 @@ for (let i = 7; i < partitions-2; ++i) {
     map.appendChild(row);
 }
 
-$('#nameform').submit(function(e){  
-    e.preventDefault();
+String.prototype.capitalize = function(lower) {
+    return (lower ? this.toLowerCase() : this).replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+};
+
+$('#nameform').submit(function(ev) {  
+    ev.preventDefault();
     $('#loader').show();
     $('#load-msg').html('Creating chart...');
     $('#load-msg').show();
@@ -39,12 +39,7 @@ $('#nameform').submit(function(e){
                 let row = map.children[i];
                 for (let j = 0; j < row.children.length; ++j) {
                     let cell = row.children[j];
-
-                    let r = data[i*partitions + j + 1][0];
-                    let g = data[i*partitions + j + 1][1];
-                    let b = data[i*partitions + j + 1][2];
-
-                    cell.style.backgroundColor = 'rgb('+r+','+g+','+b+')';
+                    cell.style.backgroundColor = data[i*partitions + j + 1];
                 }
             }
 
@@ -52,12 +47,25 @@ $('#nameform').submit(function(e){
             $('#chart-description').html(pname);
         }
         , error: function(jqXHR, textStatus, err){
-            console.error("Error: ", textStatus, err);
+            console.error("Error: ", jqXHR.status, jqXHR.responseText, textStatus, err);
             $('#loader').hide();
-            $('#load-msg').html('No player with that name was found');
+            $('#load-msg').html(jqXHR.responseText);
         }
     })
 });  
+
+function save_chart(uri, file_name) {
+    let link = $('<a>')
+    .attr('href', uri)
+    .attr('download', file_name)
+    .appendTo("body");
+
+    link.get(0).click();
+    link.remove();
+
+    $('#loader').hide();
+    $('#load-msg').hide();
+};
 
 $('#save-button').on('click', function(e) {
     e.preventDefault();
@@ -72,25 +80,10 @@ $('#save-button').on('click', function(e) {
 
     $('#load-msg').html('Saving chart...');
     $('#load-msg').show();
-
     $('#loader').show();
 
     html2canvas($('#map').get(0))
     .then(function(canvas) {
-        function save_chart(uri, file_name){
-            let link = $('<a>')
-            .attr('href', uri)
-            .attr('download', file_name)
-            .appendTo("body");
-
-            link.get(0).click();
-
-            link.remove();
-
-            $('#loader').hide();
-            $('#load-msg').hide();
-        };
-
         let img = canvas.toDataURL("image/png")
         let uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 
