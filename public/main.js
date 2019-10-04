@@ -65,7 +65,7 @@ $('#nameform').submit(function(ev) {
     let season_type = $('#season-type').val();
     
     $.ajax({ 
-        url: '/newplayerchart',
+        url: '/newshotchart',
         type: 'POST',
         cache: false, 
         data: {

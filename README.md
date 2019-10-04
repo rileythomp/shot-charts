@@ -1,6 +1,6 @@
 # shot-charts
 
-🏀 Search for and download NBA player shooting charts.
+🏀 Search for and download NBA player and team shooting charts.
 
 ![bballchart](example.png)
 

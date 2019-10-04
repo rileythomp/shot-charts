@@ -13,13 +13,14 @@ app.listen(PORT, function() {
     console.log('Running on port ' + PORT);
 });
 
-app.post('/newplayerchart', function(req, res) {
+app.post('/newshotchart', function(req, res) {
 	let player = nba.findPlayer(req.body.name);
+	let teamId = nba.teamIdFromName(req.body.name);
 	let season = req.body.season;
 	let season_type = req.body.season_type
 
-	if (player === undefined) {
-		res.status(406).send('No player with that name was found');
+	if (player == undefined && teamId == undefined) {
+		res.status(406).send('No player or team with that name was found');
 	}
 	else {
 		const court_length = 500;
@@ -31,10 +32,21 @@ app.post('/newplayerchart', function(req, res) {
 		const bottomY = -50;
 		const rightX = 250;
 		
-		let params = {
-			PlayerID: player.playerId,
-			Season: season,
-			SeasonType: season_type
+		let params;
+
+		if (player != undefined) {
+			params = {
+				PlayerID: player.playerId,
+				Season: season,
+				SeasonType: season_type
+			}
+		}
+		else {
+			params = {
+				TeamID: teamId,
+				Season: season,
+				SeasonType: season_type
+			}
 		}
 	
 		let heat_map = {};
