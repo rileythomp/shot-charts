@@ -2,6 +2,7 @@
     <head>
         <link rel="shortcut icon" type="image/png" href="bball.png"/>
         <title>NBA Shot Charts</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
         <link rel="stylesheet" href="stylesheet.css">
     </head>
     <body>
@@ -13,17 +14,38 @@
 
         <div id="name-and-save">
             <p id="chart-description"></p>
-            <button id="save-button">Download Chart</button>
+            <button id="save-button"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Save</button>
         </div>
 
         <div id="form-wrapper">
             <form id="nameform">
                 <input id="playername" type="text" placeholder="Player name">
+                <select id="season">
+                    <option value="2018-19">2018-19</option>
+                    <option value="2017-18">2017-18</option>
+                    <option value="2016-17">2016-17</option>
+                    <option value="2015-16">2015-16</option>
+                    <option value="2014-15">2014-15</option>
+                    <option value="2013-14">2013-14</option>
+                    <option value="2012-13">2012-13</option>
+                    <option value="2011-12">2011-12</option>
+                    <option value="2010-11">2010-11</option>
+                    <option value="2009-10">2009-10</option>
+                    <option value="2008-09">2008-09</option>
+                    <option value="2007-08">2007-08</option>
+                    <option value="2006-07">2006-07</option>
+                    <option value="2005-06">2005-06</option>
+                    <option value="2004-05">2004-05</option>
+                    <option value="2003-04">2003-04</option>
+                </select>
+                <select id="season-type">
+                    <option value="Regular Season">Regular Season</option>
+                    <option value="Playoffs">Playoffs</option>
+                </select>
             </form>
             <p id="load-msg"></p>
             <div id="loader"></div>
         </div>
-        
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="html2canvas.min.js"></script>

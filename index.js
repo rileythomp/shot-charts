@@ -13,35 +13,10 @@ app.listen(PORT, function() {
     console.log('Running on port ' + PORT);
 });
 
-function color_from_percent(percent) {
-    if (percent > 0 && percent <= 0.1) {
-		return 'rgb(255, 0, 0)';
-	}
-	else if (percent >= 0.1 && percent <= 0.2) {
-		return 'rgb(255, 87, 0)';
-	}
-	else if (percent >= 0.2 && percent <= 0.3) {
-		return 'rgb(255, 175, 0)';
-	}
-	else if (percent >= 0.3 && percent <= 0.4) {
-		return 'rgb(255, 255, 0)';
-	}
-	else if (percent >= 0.4 && percent <= 0.5) {
-		return 'rgb(159, 255, 86)';
-	}
-	else if (percent >= 0.5 && percent <= 0.6) {
-		return 'rgb(71, 255, 0)';
-	}
-	else if (percent >= 0.6) {
-		return 'rgb(0, 255, 0)';
-	}
-	else {
-		return 'rgb(222, 184, 135)'; // burlywood
-	}
-}
-
 app.post('/newplayerchart', function(req, res) {
 	let player = nba.findPlayer(req.body.name);
+	let season = req.body.season;
+	let season_type = req.body.season_type
 
 	if (player === undefined) {
 		res.status(406).send('No player with that name was found');
@@ -57,7 +32,9 @@ app.post('/newplayerchart', function(req, res) {
 		const rightX = 250;
 		
 		let params = {
-			PlayerID: player.playerId
+			PlayerID: player.playerId,
+			Season: season,
+			SeasonType: season_type
 		}
 	
 		let heat_map = {};
@@ -69,8 +46,13 @@ app.post('/newplayerchart', function(req, res) {
 		.then((response) => {
 			let shots = response.shot_Chart_Detail;
 			let num_shots = shots.length;
-		
-			// map each x,y pair to one of the 900 cells
+
+			if (num_shots == 0) {
+				res.status(406).send('Player did not play in the chosen season');
+				return;
+			}
+
+			// map each x,y pair to one of the cells
 			for (let i = 0; i < num_shots; ++i) {
 				let shot = shots[i];
 				let yLoc = shot.locY;
@@ -106,19 +88,11 @@ app.post('/newplayerchart', function(req, res) {
 				}
 			}
 
-			let color_array = [];
-	
-			for (let i = 7*partitions; i <= num_cells-2*partitions; ++i) {
-				let percent = heat_map[i].made / (heat_map[i].made + heat_map[i].missed);
-				color_array.push(color_from_percent(percent));
-			}
-
-			res.send(color_array);
+			res.send(heat_map);
 		})
 		.catch(err => {
 			console.log(err);
 			res.status(500).send('Could not create shot chart at this time');
 		});
 	}
-
 });

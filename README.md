@@ -2,7 +2,7 @@
 
 🏀 Search for and download NBA player shooting charts.
 
-![bballchart](screenshot.png)
+![bballchart](example.png)
 
 To run locally:
 

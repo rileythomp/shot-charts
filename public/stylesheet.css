@@ -49,13 +49,19 @@ td {
 
 input {
     height: 3em;
-    width: 100%;
+    width: 49%;
     font-size: 1em;
     padding-left: 0.5em;
 }
 
+select {
+  height: 3em;
+  font-size: 1em;
+  width: 24%;
+}
+
 #form-wrapper {
-    width: 20em;
+    width: 50em;
     margin-left: auto;
     margin-right: auto;
 }
@@ -76,6 +82,44 @@ input {
     margin-left: auto;
     margin-right: auto;
   }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 5em;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -2.5em;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
 
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
