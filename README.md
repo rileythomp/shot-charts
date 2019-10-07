@@ -6,9 +6,9 @@
 
 To run locally:
 
-```$ git clone https://github.com/rileythomp/basketball.git```
+```$ git clone https://github.com/rileythomp/shot-charts.git```
 
-```$ cd basketball```
+```$ cd shot-charts```
 
 ```$ npm i```
 
