@@ -13,11 +13,89 @@ app.listen(PORT, function() {
     console.log('Running on port ' + PORT);
 });
 
+function get_shot_area(shot) {
+	if (shot.shotZoneBasic == 'Above the Break 3') {
+		if (shot.shotZoneRange == '24+ ft.') {
+			if (shot.shotZoneArea == 'Center(C)') {
+				return 1;
+			}
+			else if (shot.shotZoneArea == 'Left Side Center(LC)') {
+				return 2;
+			}
+			else if (shot.shotZoneArea == 'Right Side Center(RC)') {
+				return 3;
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+	else if (shot.shotZoneBasic == 'Backcourt') {
+		return 4;
+	}
+	else if (shot.shotZoneBasic == 'In The Paint (Non-RA)') {
+		if (shot.shotZoneRange == '8-16 ft.') {
+			if (shot.shotZoneArea == 'Center(C)') {
+				return 5;
+			}
+			else if (shot.shotZoneArea == 'Left Side(L)') {
+				return 7;
+			}
+			else if (shot.shotZoneArea == 'Right Side(R)') {
+				return 8;
+			}
+		}
+		else {
+			return 6;
+		}
+	}
+	else if (shot.shotZoneBasic == 'Left Corner 3') {
+		return 9;
+	}
+	else if (shot.shotZoneBasic == 'Mid-Range') {
+		if (shot.shotZoneRange == '8-16 ft.') {
+			if (shot.shotZoneArea == 'Center(C)') {
+				return 10;
+			}
+			else if (shot.shotZoneArea == 'Left Side(L)') {
+				return 14;
+			}
+			else if (shot.shotZoneArea == 'Right Side(R)') {
+				return 17;
+			}
+		}
+		else if (shot.shotZoneRange == '16-24 ft.') {
+			if (shot.shotZoneArea == 'Center(C') {
+				return 11;
+			}
+			else if (shot.shotZoneArea == 'Left Side Center(LC)') {
+				return 12;
+			}
+			else if (shot.shotZoneArea == 'Left Side(L)') {
+				return 13;
+			}
+			else if (shot.shotZoneArea == 'Right Side Center(RC)') {
+				return 15;
+			}
+			else if (shot.shotZoneArea == 'Right Side(R)') {
+				return 16;
+			}
+		}
+	}
+	else if (shot.shotZoneBasic == 'Restricted Area') {
+		return 18;
+	}
+	else {
+		return 19;
+	}
+}
+
 app.post('/newshotchart', function(req, res) {
 	let player = nba.findPlayer(req.body.name);
 	let teamId = nba.teamIdFromName(req.body.name);
 	let season = req.body.season;
-	let season_type = req.body.season_type
+	let season_type = req.body.season_type;
+	let chart_type = req.body.chart_type;
 
 	if (player == undefined && teamId == undefined) {
 		res.status(406).send('No player or team with that name was found');
@@ -49,13 +127,14 @@ app.post('/newshotchart', function(req, res) {
 			}
 		}
 	
-		let heat_map = {};
+		let heat_map = {shot_count: 0};
 		for (let i = 1; i <= num_cells; ++i) {
-			heat_map[i] = {made: 0, missed: 0};
+			heat_map[i] = {made: 0, missed: 0, total: 0, area: -1};
 		}
 	
 		nba.stats.shots(params)
 		.then((response) => {
+			let league_averages = response.leagueAverages;
 			let shots = response.shot_Chart_Detail;
 			let num_shots = shots.length;
 
@@ -92,15 +171,20 @@ app.post('/newshotchart', function(req, res) {
 		
 				let region = row * partitions + col + 1;
 	
+				if (heat_map[region].area == -1) {
+					heat_map[region].area = get_shot_area(shot);
+				}
 				if (shot.shotMadeFlag == 1) {
 					heat_map[region].made += 1;
 				}
 				else {
 					heat_map[region].missed += 1;
 				}
+				heat_map[region].total += 1;
+				heat_map.shot_count += 1;
 			}
 
-			res.send(heat_map);
+			res.send({heat_map: heat_map, league_averages: league_averages, chart_type: chart_type});
 		})
 		.catch(err => {
 			console.log(err);
