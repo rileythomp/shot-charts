@@ -1,4 +1,5 @@
 $('#loader').hide();
+$('#player-info-wrapper').css('visibility','hidden')
 
 let map = document.getElementById('map');
 const partitions = 50;
@@ -94,24 +95,24 @@ function color_from_frequency(avg_num_shots, max, min, total_shots) {
 		return 'rgb(159, 255, 86)';
     }
     else if (total_shots == Math.floor(avg_num_shots)) {
-		return 'rgb(255, 255, 0)';
+		return 'rgb(0, 255, 255)';
     }
     else if (total_shots >= avg_num_shots - lower_third_len) {
-		return 'rgb(255, 175, 0)';
+		return 'rgb(0, 200, 255)';
     }
     else if (total_shots >= avg_num_shots - 2*lower_third_len) {
-		return 'rgb(255, 87, 0)';
+		return 'rgb(0, 150, 255)';
 	}
     else if (total_shots >= avg_num_shots - 3*lower_third_len) {
-		return 'rgb(255, 0, 0)';
+		return 'rgb(0, 100, 255)';
     }
 }
 
 function percent_from_map(shots) {
-	if (shots.made + shots.missed < 2) {
+	if (shots.total < 2) {
 		return -1;
 	}
-	return shots.made / (shots.made + shots.missed);
+	return shots.made / shots.total;
 }
 
 $('#nameform').submit(function(ev) {  
@@ -142,6 +143,43 @@ $('#nameform').submit(function(ev) {
             let heat_map = data.heat_map;
             let league_averages = data.league_averages;
             let chart_type = data.chart_type;
+            let headshot_url;
+            let player_city;
+            let player_team;
+            let pts;
+            let ast;
+            let reb;
+            let pie ;
+            let height;
+            let weight;
+            let position;
+            let country;
+            let school;
+            let birthdate;
+            let age;
+
+            let logo;
+
+
+            if (data.player_info != undefined) {
+              headshot_url = data.headshot;
+              player_city = data.player_info.commonPlayerInfo[0].teamCity;
+              player_team = data.player_info.commonPlayerInfo[0].teamName;
+              pts = data.player_info.playerHeadlineStats[0].pts;
+              ast = data.player_info.playerHeadlineStats[0].ast;
+              reb = data.player_info.playerHeadlineStats[0].reb;
+              pie = 100*data.player_info.playerHeadlineStats[0].pie;
+              height = data.player_info.commonPlayerInfo[0].height;
+              weight = data.player_info.commonPlayerInfo[0].weight;
+              position = data.player_info.commonPlayerInfo[0].position;
+              country = data.player_info.commonPlayerInfo[0].country;
+              school = data.player_info.commonPlayerInfo[0].school;
+              birthdate = new Date(data.player_info.commonPlayerInfo[0].birthdate);
+              age = Math.floor(Math.abs(new Date() - birthdate) / 31536000000);
+            }
+            else {
+              logo_url = data.logo;
+            }
 
             let shot_data = [];
 	
@@ -166,19 +204,14 @@ $('#nameform').submit(function(ev) {
                     if (shot.total > max) {
                         max = shot.total;
                     }
-                    // if (histogram[shot.total] == undefined) {
-                    //     histogram[shot.total] = 1;
-                    // }
-                    // else {
-                    //     histogram[shot.total] += 1;
-                    // }
                 }
             }
 
             let avg_num_shots = shot_sum/regions_with_shots;
 
-            console.log(avg_num_shots);
-            
+            let shots_taken = 0;
+            let shots_made = 0;
+
             for (let i = 0; i < map.children.length; ++i) {
                 let row = map.children[i];
                 for (let j = 0; j < row.children.length; ++j) {
@@ -187,6 +220,9 @@ $('#nameform').submit(function(ev) {
                     let percent = percent_from_map(shots);
                     let shot_area = shots.area;
                     let league_avg = league_averages[shot_area];
+
+                    shots_taken += shots.total;
+                    shots_made += shots.made;
 
                     if (chart_type == 'absolute') {
                         cell.style.backgroundColor = color_from_absolute(percent);
@@ -213,7 +249,39 @@ $('#nameform').submit(function(ev) {
                 }
             }
 
+            let fgpct = 100*(shots_made/shots_taken);
+
             $('#load-msg').hide();
+            if (data.player_info != undefined) {
+              try {
+                $('#headshot').attr('src', headshot_url);
+              }
+              catch (e) {
+                $('#headshot').attr('src', './blank-male.jpg');
+              }
+              $('#display-name').html(pname);
+              $('#display-team').html(player_city + ' ' + player_team);
+              $('#pts').html(pts);
+              $('#reb').html(reb);
+              $('#ast').html(ast);
+              $('#pie').html(Math.round(pie * 10) / 10);
+              $('#fgpct').html(Math.round(fgpct * 10)/10 + '%');
+              $('#height').html(height);
+              $('#weight').html(weight);
+              $('#country').html(country);
+              $('#display-position').html(position);
+              $('#school').html(school);
+              $('#age').html(age);
+              
+              $('.player-data').css('visibility', 'visible');
+              $('#player-info-wrapper').css('visibility', 'visible');
+            }
+            else {
+              $('#headshot').attr('src', logo_url);
+              $('#display-name').html(pname);
+              $('.player-data').css('visibility', 'hidden');
+              $('#player-info-wrapper').css('visibility', 'visible');
+            }
             $('#chart-description').html(pname);
         }
         , error: function(jqXHR, textStatus, err){
@@ -260,3 +328,8 @@ $('#save-button').on('click', function(e) {
         save_chart(uri, $('#chart-description').text() + ' shot chart.png');
     });
 }); 
+
+function imgError(img) {
+  img.src = './blank_male.jpg';
+  return true;
+}

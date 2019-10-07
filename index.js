@@ -112,6 +112,8 @@ app.post('/newshotchart', function(req, res) {
 		
 		let params;
 
+		let team_abbr;
+
 		if (player != undefined) {
 			params = {
 				PlayerID: player.playerId,
@@ -124,6 +126,11 @@ app.post('/newshotchart', function(req, res) {
 				TeamID: teamId,
 				Season: season,
 				SeasonType: season_type
+			}
+			for (let i = 0; i < nba.teams.length; ++i) {
+				if (nba.teams[i].teamId == teamId) {
+					team_abbr = nba.teams[i].abbreviation;
+				}
 			}
 		}
 	
@@ -184,7 +191,19 @@ app.post('/newshotchart', function(req, res) {
 				heat_map.shot_count += 1;
 			}
 
-			res.send({heat_map: heat_map, league_averages: league_averages, chart_type: chart_type});
+			if (player != undefined) {
+				let headshot = 'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/' + player.teamId + '/2018/260x190/' + player.playerId + '.png';
+
+				nba.stats.playerInfo(params)
+				.then((nba_res) => {
+					res.send({heat_map: heat_map, league_averages: league_averages, chart_type: chart_type, headshot: headshot, player_info: nba_res});
+				})
+			}
+			else {
+				let logo = 'https://stats.nba.com/media/img/teams/logos/' + team_abbr + '_logo.svg'
+				res.send({heat_map: heat_map, league_averages: league_averages, chart_type: chart_type, logo: logo});
+
+			}
 		})
 		.catch(err => {
 			console.log(err);

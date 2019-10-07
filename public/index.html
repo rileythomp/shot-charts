@@ -8,13 +8,35 @@
     <body>
         <h2>NBA Shot Charts</h2>
 
-        <table id="map">
+        <div class="grid-container">
+            <div id="map-wrapper">
+                <table id="map">
 
-        </table>
+                </table>
+            </div>
+            
+            <div id="player-info-wrapper">
+                <img id="headshot" onError="this.src='./blank_male.jpg';">
+                <p id="display-name"></p>
+                <p class='player-data' id="display-team"></p>
+                <p class='player-data' id="display-position"></p>
+                <p class='player-data'>Age: <span id="age"></span></p>
+                <p class='player-data'>PTS: <span id="pts"></span></p>
+                <p class='player-data'>AST: <span id="ast"></span></p>
+                <p class='player-data'>REB: <span id="reb"></span></p>
+                <p class='player-data'>FG %: <span id="fgpct"></span></p>
+                <p class='player-data'>PIE: <span id="pie"></span></p>
+                <p class='player-data'>Height: <span id="height"></span></p>
+                <p class='player-data'>Weight: <span id="weight"></span> lbs</p>
+                <p class='player-data'>Country: <span id="country"></span></p>
+                <p class='player-data'>School: <span id="school"></span></p>
+                <button id="save-button"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Save</button>
+            </div>
+        </div>
 
         <div id="name-and-save">
             <p id="chart-description"></p>
-            <button id="save-button"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Save</button>
+            <!-- <button id="save-button"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Save</button> -->
         </div>
 
         <div id="form-wrapper">
