@@ -140,11 +140,8 @@ $('#nameform').submit(function(ev) {
                     else if (chart_type == 'frequency') {
                         cell.style.backgroundColor = color_from_frequency(avg_num_shots, max, min, shots.total);
                     }
-                    else if (league_avg != undefined) {
-                        cell.style.backgroundColor = color_from_relative(percent, league_avg);
-                    }
                     else {
-                        cell.style.backgroundColor = 'burlywood';
+                        cell.style.backgroundColor = color_from_relative(percent, league_avg);
                     }
 
                     if (percent != -1) {

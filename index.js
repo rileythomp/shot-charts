@@ -95,7 +95,7 @@ app.post('/newshotchart', function(req, res) {
 				let region = row * partitions + col + 1;
 	
 				if (heat_map[region].area == -1) {
-					heat_map[region].area = nba_stats.get_shot_area(shot);
+					heat_map[region].area = helpers.get_shot_area(shot.shotZoneBasic, shot.shotZoneRange, shot.shotZoneArea);
 				}
 				if (shot.shotMadeFlag == 1) {
 					heat_map[region].made += 1;
