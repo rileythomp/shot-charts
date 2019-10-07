@@ -1,6 +1,6 @@
 body {
   font-family: Arial;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 100%), url('court_floor.jpg');
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 100%), url('assets/court_floor.jpg');
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -21,7 +21,7 @@ h2 {
     border-collapse: collapse;
     margin-left: 0;
     margin-right: 0;
-    background-image: url('the_court.jpg'); 
+    background-image: url('assets/the_court.jpg'); 
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

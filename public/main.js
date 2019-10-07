@@ -253,12 +253,7 @@ $('#nameform').submit(function(ev) {
 
             $('#load-msg').hide();
             if (data.player_info != undefined) {
-              try {
-                $('#headshot').attr('src', headshot_url);
-              }
-              catch (e) {
-                $('#headshot').attr('src', './blank-male.jpg');
-              }
+              $('#headshot').attr('src', headshot_url);
               $('#display-name').html(pname);
               $('#display-team').html(player_city + ' ' + player_team);
               $('#pts').html(pts);
@@ -328,8 +323,3 @@ $('#save-button').on('click', function(e) {
         save_chart(uri, $('#chart-description').text() + ' shot chart.png');
     });
 }); 
-
-function imgError(img) {
-  img.src = './blank_male.jpg';
-  return true;
-}
