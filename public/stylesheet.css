@@ -1,47 +1,52 @@
+@keyframes spin{
+    0% { transform: rotate(0deg) } to { transform: rotate(360deg) }
+}
+    
+#chart, body {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center
+}
+
 body {
-  font-family: Arial;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 100%), url('assets/court_floor.jpg');
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+    font-family: Arial;
+    background: linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.6) 100%), url(assets/court_floor.jpg);
+    background-attachment: fixed
 }
 
 h2 {
-  text-align: center;
+    text-align: center
 }
 
 .grid-container {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: 1em;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1em
 }
 
-#map {
+#chart {
     border-collapse: collapse;
     margin-left: 0;
-    margin-right: 0;
-    background-image: url('assets/the_court.jpg'); 
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    margin-right: 0; 
+    background-image: url(assets/the_court.jpg);
     float: right;
-    border: 1px solid black;
+    border: 1px solid #000
 }
 
 #player-info-wrapper {
-  position: relative;
+    position: relative;
+    visibility:hidden;
 }
 
 #headshot {
-  height: 9.5em;
-  width: 13em;
-  border: 1px solid black;
-  background-color: white;
+    height: 9.5em;
+    width: 13em;
+    border: 1px solid #000;
+    background-color: #fff;
 }
 
-#display-name {
-  font-weight: bold;
+#name {
+    font-weight: 700;
 }
 
 td {
@@ -51,36 +56,38 @@ td {
     height: 1em;
 }
 
-#name-and-save {
-  text-align: center;
-  margin-top: 1em;
-  margin-bottom: 1em;
+#chart-name-wrapper {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 #save-button {
-  height: 2em;
-  position: absolute;
-  bottom: 0;
+    height: 2em;
+    position: absolute;
+    bottom: 0;
 }
 
-#chart-description {
+#chart-name {
     font-family: Arial;
     text-align: center;
     display: inline;
-    font-weight: bold;
+    font-weight: 700;
+    visibility: hidden;
+}
+
+input,select {
+    height: 3em;
+    font-size: 1em;
 }
 
 input {
-    height: 3em;
+    padding-left: .5em;
     width: 41%;
-    font-size: 1em;
-    padding-left: 0.5em;
 }
 
 select {
-  height: 3em;
-  font-size: 1em;
-  width: 19%;
+    width: 19%;
 }
 
 #form-wrapper {
@@ -90,66 +97,50 @@ select {
 }
 
 #load-msg {
-  display: none;
-  text-align: center;
+    display: none;
+    text-align: center;
 }
 
 #loader {
-    border: 0.5em solid #f3f3f3;
+    display: none;
+    border: .5em solid #f3f3f3;
     border-radius: 50%;
-    border-top: 0.5em solid #3498db;
-    width: 1em;
-    height: 1em;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
+    border-top: .5em solid #3498db;
+    width: 1em;height: 1em;
     animation: spin 2s linear infinite;
     margin-left: auto;
     margin-right: auto;
-  }
+}
 
 .tooltip {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .tooltip .tooltiptext {
-  visibility: hidden;
-  width: 9em;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -4.5em;
-  opacity: 0;
-  transition: opacity 0.3s;
+    visibility: hidden;
+    width: 9em;background-color: #555;
+    color: #fff;text-align: center;
+    border-radius: 6px;padding: 5px 0;
+    position: absolute;z-index: 1;
+    bottom: 125%;left: 50%;
+    margin-left: -4.5em;
+    opacity: 0;
+    transition: opacity .3s;
 }
 
 .tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
-
-@-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="shortcut icon" type="image/png" href="assets/bball.png"/>
+        <link rel="shortcut icon" type="image/png" href="./assets/bball.png"/>
         <title>NBA Shot Charts</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
         <link rel="stylesheet" href="stylesheet.css">
@@ -9,37 +9,41 @@
         <h2>NBA Shot Charts</h2>
 
         <div class="grid-container">
-            <div id="map-wrapper">
-                <table id="map">
+            <div id="chart-wrapper">
+                <table id="chart">
 
                 </table>
             </div>
+
             <div id="player-info-wrapper">
                 <img id="headshot" onError="this.src='assets/blank_male.jpg';">
-                <p id="display-name"></p>
-                <p class='player-data' id="display-team"></p>
-                <p class='player-data' id="display-position"></p>
-                <p class='player-data'>Age: <span id="age"></span></p>
-                <p class='player-data'>PTS: <span id="pts"></span></p>
-                <p class='player-data'>AST: <span id="ast"></span></p>
-                <p class='player-data'>REB: <span id="reb"></span></p>
-                <p class='player-data'>FG %: <span id="fgpct"></span></p>
-                <p class='player-data'>PIE: <span id="pie"></span></p>
-                <p class='player-data'>Height: <span id="height"></span></p>
-                <p class='player-data'>Weight: <span id="weight"></span> lbs</p>
-                <p class='player-data'>Country: <span id="country"></span></p>
-                <p class='player-data'>School: <span id="school"></span></p>
+                <p id="name"></p>
+                <p class='team-info'>Conference: <span id='conference'></span></p>
+                <p class='team-info'>Division: <span id='division'></span></p>
+                <p class='player-info' id="team"></p>
+                <p class='player-info' id="position"></p>
+                <p class='player-info'>Age: <span id="age"></span></p>
+                <p class='player-info'>PTS: <span id="pts"></span></p>
+                <p class='player-info'>AST: <span id="ast"></span></p>
+                <p class='player-info'>REB: <span id="reb"></span></p>
+                <p>FG %: <span id="fgpct"></span></p>
+                <p class='player-info'>PIE: <span id="pie"></span></p>
+                <p class='player-info'>Height: <span id="height"></span></p>
+                <p class='player-info'>Weight: <span id="weight"></span> lbs</p>
+                <p class='player-info'>Country: <span id="country"></span></p>
+                <p class='player-info'>School: <span id="school"></span></p>
                 <button id="save-button"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Save</button>
             </div>
         </div>
 
-        <div id="name-and-save">
-            <p id="chart-description"></p>
+        <div id="chart-name-wrapper">
+            <p id="chart-name">.</p>
         </div>
 
         <div id="form-wrapper">
-            <form id="nameform">
-                <input id="playername" type="text" placeholder="Search by player or team">
+            <form id="chart-form">
+                <input id="search-name" type="text" placeholder="Search by player or team">
+
                 <select id="season">
                     <option value="2018-19">2018-19</option>
                     <option value="2017-18">2017-18</option>
@@ -58,23 +62,26 @@
                     <option value="2004-05">2004-05</option>
                     <option value="2003-04">2003-04</option>
                 </select>
+
                 <select id="season-type">
                     <option value="Regular Season">Regular Season</option>
                     <option value="Playoffs">Playoffs</option>
                 </select>
+
                 <select id="chart-type">
                     <option value="absolute">Absolute FG%</option>
                     <option value="relative">Relative FG%</option>
                     <option value="frequency">Frequency</option>
                 </select>
             </form>
+
             <p id="load-msg"></p>
             <div id="loader"></div>
         </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="html2canvas.min.js"></script>
-    <script src="colors.js"></script>
-    <script src="save_chart.js"></script>
-    <script src="main.js"></script>
+    <script src="js/html2canvas.min.js"></script>
+    <script src="js/colors.js"></script>
+    <script src="js/save_chart.js"></script>
+    <script src="js/main.js"></script>
 </html>

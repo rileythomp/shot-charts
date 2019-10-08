@@ -31,77 +31,133 @@ let team_abbreviations = {
 	1610612764: 'WAS'
 }
 
-function get_shot_area(basic, area, range) {
+function get_image_url(player, id) {
+	if (player == undefined) {
+		return 'https://stats.nba.com/media/img/teams/logos/' + team_abbreviations[id] + '_logo.svg'
+	}
+	return 'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/' + player.teamId + '/2018/260x190/' + player.playerId + '.png';
+}
+
+function get_shot_area(shot) {
+	let basic = shot.shotZoneBasic;
+	let range = shot.shotZoneRange;
+	let area = shot.shotZoneArea;
+
 	if (basic == 'Above the Break 3' && area == 'Back Court Shot' && range == 'Back Court(BC)') {
 		return 0;
-	}
-	if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Center(C)') {
+	} else if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Center(C)') {
 		return 1;
-	}
-	if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Left Side Center(LC)') {
+	} else if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Left Side Center(LC)') {
 		return 2;
-	}
-	if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Right Side Center(RC)') {
+	} else if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Right Side Center(RC)') {
 		return 3;
-	}
-	if (basic == 'Backcourt' && area == 'Back Court Shot' && range == 'Back Court(BC)') {
+	} else if (basic == 'Backcourt' && area == 'Back Court Shot' && range == 'Back Court(BC)') {
 		return 4;
-	}
-	if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Center(C)') {
+	} else if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Center(C)') {
 		return 5;
-	}
-	if (basic == 'In The Paint (Non-RA)' && area == 'Less Than 8 ft.' && range == 'Center(C)') {
+	} else if (basic == 'In The Paint (Non-RA)' && area == 'Less Than 8 ft.' && range == 'Center(C)') {
 		return 6;
-	}
-	if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Left Side(L)') {
+	} else if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Left Side(L)') {
 		return 7;
-	}
-	if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Right Side(R)') {
+	} else if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Right Side(R)') {
 		return 8;
-	}
-	if (basic == 'Left Corner 3' && area == '24+ ft.' && range == 'Left Side(L)') {
+	} else if (basic == 'Left Corner 3' && area == '24+ ft.' && range == 'Left Side(L)') {
 		return 9;
-	}
-	if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Center(C)') {
+	} else if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Center(C)') {
 		return 10;
-	}
-	if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Center(C)') {
+	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Center(C)') {
 		return 11;
-	}
-	if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Left Side Center(LC)') {
+	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Left Side Center(LC)') {
 		return 12;
-	}
-	if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Left Side(L)') {
+	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Left Side(L)') {
 		return 13;
-	}
-	if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Left Side(L)') {
+	} else if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Left Side(L)') {
 		return 14;
-	}
-	if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Right Side Center(RC)') {
+	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Right Side Center(RC)') {
 		return 15;
-	}
-	if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Right Side(R)') {
+	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Right Side(R)') {
 		return 16;
-	}
-	if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Right Side(R)') {
+	} else if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Right Side(R)') {
 		return 17;
-	}
-	if (basic == 'Restricted Area' && area == 'Less Than 8 ft.' && range == 'Center(C)') {
+	} else if (basic == 'Restricted Area' && area == 'Less Than 8 ft.' && range == 'Center(C)') {
 		return 18;
-	}
-	if (basic == 'Right Corner 3' && area == '24+ ft.' && range == 'Right Side(R)') {
+	} else if (basic == 'Right Corner 3' && area == '24+ ft.' && range == 'Right Side(R)') {
 		return 19;
 	}
 }
 
-function headshot(player) {
-	return 'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/' + player.teamId + '/2018/260x190/' + player.playerId + '.png';
+function create_heat_map(shots) {
+	const court_length = 500;
+	const partitions = 50;
+	const partition_length = court_length/partitions;
+	const num_cells = partitions*partitions;
+	const topY = 450;
+	const leftX = -250;
+	const bottomY = -50;
+	const rightX = 250;
+
+	let heat_map = {shot_count: 0};
+	for (let i = 1; i <= num_cells; ++i) {
+		heat_map[i] = {made: 0, missed: 0, total: 0, area: -1};
+	}
+
+	for (let i = 0; i < shots.length; ++i) {
+		let shot = shots[i];
+		let yLoc = shot.locY;
+		let xLoc = shot.locX;
+
+		if (yLoc > topY) {
+			yLoc = topY;
+		} else if (yLoc < bottomY) {
+			yLoc = bottomY;
+		}
+
+		if (xLoc > rightX) {
+			xLoc = rightX;
+		} else if (xLoc < leftX) {
+			xLoc = leftX;
+		}
+
+		// 0 is far left
+		let col = Math.floor(Math.abs((leftX - xLoc)/partition_length));
+		// 0 is top
+		let row = Math.floor(Math.abs((topY - yLoc)/partition_length));
+
+		let region = row * partitions + col + 1;
+
+		if (heat_map[region].area == -1) {
+			heat_map[region].area = get_shot_area(shot);
+		}
+
+		if (shot.shotMadeFlag == 1) {
+			heat_map[region].made += 1;
+		} else {
+			heat_map[region].missed += 1;
+		}
+
+		heat_map[region].total += 1;
+		heat_map.shot_count += 1;
+	}
+
+	return heat_map;
 }
 
-function logo(id) {
-	return 'https://stats.nba.com/media/img/teams/logos/' + team_abbreviations[id] + '_logo.svg'
+function set_stats_params(player, teamId, season, season_type) {
+	if (player != undefined) {
+		return {
+			PlayerID: player.playerId,
+			Season: season,
+			SeasonType: season_type
+		}
+	} else {
+		return {
+			TeamID: teamId,
+			Season: season,
+			SeasonType: season_type
+		}
+	}
 }
 
-exports.get_shot_area = get_shot_area;
-exports.headshot = headshot;
-exports.logo = logo;
+exports.get_image_url = get_image_url;
+exports.create_heat_map = create_heat_map;
+exports.set_stats_params = set_stats_params;
