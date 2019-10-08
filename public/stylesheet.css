@@ -15,7 +15,8 @@ body {
 }
 
 h2 {
-    text-align: center
+    text-align: center;
+    margin: 1em auto;
 }
 
 .grid-container {
@@ -36,6 +37,10 @@ h2 {
 #player-info-wrapper {
     position: relative;
     visibility:hidden;
+}
+
+#player-info-wrapper p {
+    margin: 0.5em auto;
 }
 
 #headshot {

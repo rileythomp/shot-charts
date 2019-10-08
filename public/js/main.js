@@ -21,16 +21,29 @@ function get_display_name(info) {
     return info.teamInfoCommon[0].teamCity + ' ' + info.teamInfoCommon[0].teamName;
 }
 
+function get_nba_url(info) {
+    let base_url = 'https://www.nba.com/';
+    if (info.commonPlayerInfo != undefined) {
+        base_url += 'players/';
+        return base_url + info.commonPlayerInfo[0].firstName.toLowerCase() + '/' + info.commonPlayerInfo[0].lastName.toLowerCase() + '/' + info.commonPlayerInfo[0].personId;
+    } else {
+        base_url += 'teams/';
+        return base_url + info.teamInfoCommon[0].teamCode;
+    }
+}
+
 function set_display_info(data, shots_taken, shots_made) {
     $('#load-msg').hide();
 
     let display_name = get_display_name(data.display_info);
     let fgpct = 100*(shots_made/shots_taken);
+    let nba_url = get_nba_url(data.display_info);
 
     $('#chart-name').html(display_name);
     $('#chart-name').css('visibility', 'visible');
 
     $('#headshot').attr('src', data.img_url);
+    $('#nba-link').attr('href', nba_url);
     $('#name').html(display_name);
     $('#fgpct').html(Math.round(fgpct * 10)/10 + '%');
 
