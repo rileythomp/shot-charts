@@ -43,45 +43,45 @@ function get_shot_area(shot) {
 	let range = shot.shotZoneRange;
 	let area = shot.shotZoneArea;
 
-	if (basic == 'Above the Break 3' && area == 'Back Court Shot' && range == 'Back Court(BC)') {
+	if (basic == 'Above the Break 3' && range == 'Back Court Shot' && area == 'Back Court(BC)') {
 		return 0;
-	} else if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Center(C)') {
+	} else if (basic == 'Above the Break 3' && range == '24+ ft.' && area == 'Center(C)') {
 		return 1;
-	} else if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Left Side Center(LC)') {
+	} else if (basic == 'Above the Break 3' && range == '24+ ft.' && area == 'Left Side Center(LC)') {
 		return 2;
-	} else if (basic == 'Above the Break 3' && area == '24+ ft.' && range == 'Right Side Center(RC)') {
+	} else if (basic == 'Above the Break 3' && range == '24+ ft.' && area == 'Right Side Center(RC)') {
 		return 3;
-	} else if (basic == 'Backcourt' && area == 'Back Court Shot' && range == 'Back Court(BC)') {
+	} else if (basic == 'Backcourt' && range == 'Back Court Shot' && area == 'Back Court(BC)') {
 		return 4;
-	} else if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Center(C)') {
+	} else if (basic == 'In The Paint (Non-RA)' && range == '8-16 ft.' && area == 'Center(C)') {
 		return 5;
-	} else if (basic == 'In The Paint (Non-RA)' && area == 'Less Than 8 ft.' && range == 'Center(C)') {
+	} else if (basic == 'In The Paint (Non-RA)' && range == 'Less Than 8 ft.' && area == 'Center(C)') {
 		return 6;
-	} else if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Left Side(L)') {
+	} else if (basic == 'In The Paint (Non-RA)' && range == '8-16 ft.' && area == 'Left Side(L)') {
 		return 7;
-	} else if (basic == 'In The Paint (Non-RA)' && area == '8-16 ft.' && range == 'Right Side(R)') {
+	} else if (basic == 'In The Paint (Non-RA)' && range == '8-16 ft.' && area == 'Right Side(R)') {
 		return 8;
-	} else if (basic == 'Left Corner 3' && area == '24+ ft.' && range == 'Left Side(L)') {
+	} else if (basic == 'Left Corner 3' && range == '24+ ft.' && area == 'Left Side(L)') {
 		return 9;
-	} else if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Center(C)') {
+	} else if (basic == 'Mid-Range' && range == '8-16 ft.' && area == 'Center(C)') {
 		return 10;
-	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Center(C)') {
+	} else if (basic == 'Mid-Range' && range == '16-24 ft.' && area == 'Center(C)') {
 		return 11;
-	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Left Side Center(LC)') {
+	} else if (basic == 'Mid-Range' && range == '16-24 ft.' && area == 'Left Side Center(LC)') {
 		return 12;
-	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Left Side(L)') {
+	} else if (basic == 'Mid-Range' && range == '16-24 ft.' && area == 'Left Side(L)') {
 		return 13;
-	} else if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Left Side(L)') {
+	} else if (basic == 'Mid-Range' && range == '8-16 ft.' && area == 'Left Side(L)') {
 		return 14;
-	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Right Side Center(RC)') {
+	} else if (basic == 'Mid-Range' && range == '16-24 ft.' && area == 'Right Side Center(RC)') {
 		return 15;
-	} else if (basic == 'Mid-Range' && area == '16-24 ft.' && range == 'Right Side(R)') {
+	} else if (basic == 'Mid-Range' && range == '16-24 ft.' && area == 'Right Side(R)') {
 		return 16;
-	} else if (basic == 'Mid-Range' && area == '8-16 ft.' && range == 'Right Side(R)') {
+	} else if (basic == 'Mid-Range' && range == '8-16 ft.' && area == 'Right Side(R)') {
 		return 17;
-	} else if (basic == 'Restricted Area' && area == 'Less Than 8 ft.' && range == 'Center(C)') {
+	} else if (basic == 'Restricted Area' && range == 'Less Than 8 ft.' && area == 'Center(C)') {
 		return 18;
-	} else if (basic == 'Right Corner 3' && area == '24+ ft.' && range == 'Right Side(R)') {
+	} else if (basic == 'Right Corner 3' && range == '24+ ft.' && area == 'Right Side(R)') {
 		return 19;
 	}
 }

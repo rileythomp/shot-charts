@@ -116,6 +116,7 @@ $('#chart-form').submit(function(ev) {
         success: function(data){
             $('#loader').hide();
             $('#load-msg').show();
+            $('.tooltiptext').remove();
 
             let heat_map = data.heat_map;
             let league_averages = data.league_averages;
@@ -174,7 +175,7 @@ $('#chart-form').submit(function(ev) {
                         tooltip.classList.add('tooltiptext');
                         tooltip.innerHTML =  shots.made + '/' + (shots.made + shots.missed) + ', ' + Math.round(percent*100) + '%';
                         if (league_avg != undefined) {
-                            tooltip.innerHTML += '<sbr> League Avg: ' + Math.round(100 * league_averages[shot_area].fgPct) + '%';
+                            tooltip.innerHTML += '<br> League Avg: ' + Math.round(100 * league_averages[shot_area].fgPct) + '%';
                         }
                         cell.appendChild(tooltip);
                     }
