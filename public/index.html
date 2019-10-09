@@ -6,7 +6,29 @@
         <link rel="stylesheet" href="stylesheet.css">
     </head>
     <body>
-        <h2>NBA Shot Charts</h2>
+        <div id='player-banner' class='flex-container'>
+            <div>
+                <a id='nba-link' target='blank'><img draggable='false' id="headshot" onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png';"></a>
+            </div>
+            <div id='banner-info'>
+                    <p>
+                        <span id='jersey-num'></span>
+                        <span id='banner-bar'>|</span>
+                        <span id='banner-position'></span>
+                    </p>
+                    <p id='banner-first' class="banner-name nba-player-header__first-name">Steven</p>
+                    <p id='banner-last' class="banner-name nba-player-header__last-name">Adams</p>
+            </div>
+            <div class='banner-stats'>
+                <p class='player-info'>PTS: <span id="pts"></span></p>
+                <p class='player-info'>AST: <span id="ast"></span></p>
+                <p class='player-info'>REB: <span id="reb"></span></p>
+                <p>FG %: <span id="fgpct"></span></p>
+                <p class='player-info'>PIE: <span id="pie"></span></p>
+                <p class='team-info' id='conference'></p>
+                <p class='team-info' id='division'></p>
+            </div>
+        </div>
 
         <div class="grid-container">
             <div id="chart-wrapper">
@@ -14,30 +36,6 @@
 
                 </table>
             </div>
-
-            <div id="player-info-wrapper">
-                <a id='nba-link' target='blank'><img id="headshot" onError="this.src='assets/blank_male.jpg';"></a>
-                <p id="name"></p>
-                <p class='team-info'>Conference: <span id='conference'></span></p>
-                <p class='team-info'>Division: <span id='division'></span></p>
-                <p class='player-info' id="team"></p>
-                <p class='player-info' id="position"></p>
-                <p class='player-info'>Age: <span id="age"></span></p>
-                <p class='player-info'>PTS: <span id="pts"></span></p>
-                <p class='player-info'>AST: <span id="ast"></span></p>
-                <p class='player-info'>REB: <span id="reb"></span></p>
-                <p>FG %: <span id="fgpct"></span></p>
-                <p class='player-info'>PIE: <span id="pie"></span></p>
-                <p class='player-info'>Height: <span id="height"></span></p>
-                <p class='player-info'>Weight: <span id="weight"></span> lbs</p>
-                <p class='player-info'>Country: <span id="country"></span></p>
-                <p class='player-info'>School: <span id="school"></span></p>
-                <button id="save-button"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;&nbsp;Save</button>
-            </div>
-        </div>
-
-        <div id="chart-name-wrapper">
-            <p id="chart-name">.</p>
         </div>
 
         <div id="form-wrapper">

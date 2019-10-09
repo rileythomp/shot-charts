@@ -14,7 +14,7 @@ function save_chart(uri, file_name) {
 $('#save-button').on('click', function(e) {
     e.preventDefault();
 
-    let chart_name = $('#chart-name').text();
+    let chart_name = $('#name').text();
 
     if (chart_name == '') {
         $('#load-msg').html('No player selected');
@@ -30,6 +30,6 @@ $('#save-button').on('click', function(e) {
     .then(function(canvas) {
         let img = canvas.toDataURL("image/png")
         let uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-        save_chart(uri, $('#chart-name').text() + ' shot chart.png');
+        save_chart(uri, chart_name + ' shot chart.png');
     });
 }); 

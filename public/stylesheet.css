@@ -2,7 +2,7 @@
     0% { transform: rotate(0deg) } to { transform: rotate(360deg) }
 }
     
-#chart, body {
+#chart, body, #player-banner {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center
@@ -14,6 +14,66 @@ body {
     background-attachment: fixed
 }
 
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#player-banner {
+    border: 1px solid black;
+    width: 45em;
+    height: 10em;
+    margin: 1em auto;
+    /* background-image: linear-gradient(to bottom, rgb(0, 45, 98) 0%, rgb(0, 45, 98, 0.5) 50%, transparent 100%); */
+    /* background-color: rgb(0, 45, 98); */
+    position: relative;
+    filter: brightness(80%)
+}
+
+#player-banner div {
+    height: 11em;
+    width: 15em;
+}
+
+#player-banner img {
+    height: 9.5em;
+    width: 13em;
+    position: absolute;
+    bottom: 0;
+    filter: brightness(125%);
+}
+
+#banner-info {
+    color: white;
+    font-weight: bold;
+    padding: 2em 0;
+}
+
+.banner-stats {
+    color: white;
+    position: absolute;
+    right: 0;
+    margin-top: 0.5em;
+    width: 9em !important;
+}
+
+.banner-stats p {
+    margin: 0.5em;
+    font-weight: bold;
+}
+
+.banner-name {
+    margin: 0;
+}
+
+#banner-first {
+    font-size: 1.5em;
+}
+
+#banner-last {
+    font-size: 2em;
+}
+
 h2 {
     text-align: center;
     margin: 1em auto;
@@ -21,17 +81,18 @@ h2 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
     grid-gap: 1em
 }
 
 #chart {
     border-collapse: collapse;
-    margin-left: 0;
-    margin-right: 0; 
+    /* margin-left: 0;
+    margin-right: 0;  */
     background-image: url(assets/the_court.jpg);
-    float: right;
-    border: 1px solid #000
+    /* float: right; */
+    border: 1px solid #000;
+    margin: 0.5em auto;
 }
 
 #player-info-wrapper {
@@ -40,45 +101,26 @@ h2 {
 }
 
 #player-info-wrapper p {
-    margin: 0.5em auto;
-}
-
-#headshot {
-    height: 9.5em;
-    width: 13em;
-    border: 1px solid #000;
-    background-color: #fff;
+    margin: 0.75em auto;
 }
 
 #name {
     font-weight: 700;
+    font-size: 1.5em;
+    margin: 0.5em auto 0.25 auto !important;
 }
 
 td {
     margin: 0;
     padding: 0;
-    width: 1em;
-    height: 1em;
-}
-
-#chart-name-wrapper {
-    text-align: center;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    width: 0.9em;
+    height: 0.9em;
 }
 
 #save-button {
     height: 2em;
     position: absolute;
     bottom: 0;
-}
-
-#chart-name {
-    font-family: Arial;
-    text-align: center;
-    display: inline;
-    font-weight: 700;
-    visibility: hidden;
 }
 
 input,select {
@@ -96,9 +138,8 @@ select {
 }
 
 #form-wrapper {
-    width: 65em;
-    margin-left: auto;
-    margin-right: auto;
+    width: 45em;
+    margin: 1em auto;
 }
 
 #load-msg {

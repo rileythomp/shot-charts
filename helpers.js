@@ -35,7 +35,7 @@ function get_image_url(player, id) {
 	if (player == undefined) {
 		return 'https://stats.nba.com/media/img/teams/logos/' + team_abbreviations[id] + '_logo.svg'
 	}
-	return 'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/' + player.teamId + '/2018/260x190/' + player.playerId + '.png';
+	return 'https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/' + player.playerId + '.png';
 }
 
 function get_shot_area(shot) {
