@@ -1,8 +1,8 @@
 function save_chart(uri, file_name) {
     let link = $('<a>')
-    .attr('href', uri)
-    .attr('download', file_name)
-    .appendTo("body");
+        .attr('href', uri)
+        .attr('download', file_name)
+        .appendTo("body");
 
     link.get(0).click();
     link.remove();
@@ -27,9 +27,9 @@ $('#save-button').on('click', function(e) {
     $('#loader').show();
 
     html2canvas($('#chart').get(0))
-    .then(function(canvas) {
-        let img = canvas.toDataURL("image/png")
-        let uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-        save_chart(uri, chart_name + ' shot chart.png');
-    });
-}); 
+        .then(function(canvas) {
+            let img = canvas.toDataURL("image/png")
+            let uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+            save_chart(uri, chart_name + ' shot chart.png');
+        });
+});

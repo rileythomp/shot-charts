@@ -2,9 +2,9 @@ document.getElementsByTagName('html')[0].style.visibility = 'hidden';
 
 let chart = document.getElementById('chart');
 const partitions = 50;
-const num_cells = partitions*partitions;
+const num_cells = partitions * partitions;
 
-for (let i = 7; i < partitions-2; ++i) {
+for (let i = 7; i < partitions - 2; ++i) {
     let row = document.createElement('tr');
     for (let j = 0; j < partitions; ++j) {
         let cell = document.createElement('td');
@@ -51,7 +51,7 @@ function set_display_info(data, fgpct) {
     $('#headshot').attr('src', data.img_url);
     $('#nba-link').attr('href', nba_url);
 
-    $('#fgpct').html(Math.round(fgpct * 10)/10 + '%');
+    $('#fgpct').html(Math.round(fgpct * 10) / 10 + '%');
 
     if (data.display_info.commonPlayerInfo == undefined) {
         let conference = data.display_info.teamInfoCommon[0].teamConference;
@@ -60,7 +60,7 @@ function set_display_info(data, fgpct) {
         let team_color = team_colors[data.display_info.teamInfoCommon[0].teamAbbreviation];
 
 
-        $('#player-banner').css('background-image', 'linear-gradient(to bottom, rgb(' + team_color + ') 0%, rgb('+ team_color + ', 0.5) 50%, transparent 100%), url(' + background_logo + ')');
+        $('#player-banner').css('background-image', 'linear-gradient(to bottom, rgb(' + team_color + ') 0%, rgb(' + team_color + ', 0.5) 50%, transparent 100%), url(' + background_logo + ')');
         $('#player-banner').css('background-color', 'rgb(' + team_color + ')');
 
         $('#banner-first').html('');
@@ -76,24 +76,23 @@ function set_display_info(data, fgpct) {
     } else {
         let display_info = data.display_info.commonPlayerInfo[0];
         let player_stats = data.display_info.playerHeadlineStats[0];
-        let player_city  = display_info.teamCity;
+        let player_city = display_info.teamCity;
         let player_team = display_info.teamName;
         let positions = display_info.position.split('-');
         let position;
         if (positions.length == 1) {
             position = positions[0][0];
-        }
-        else {
+        } else {
             position = positions[0][0] + '-' + positions[1][0];
         }
         let pts = player_stats.pts;
         let ast = player_stats.ast;
         let reb = player_stats.reb;
-        let pie = 100*player_stats.pie;
+        let pie = 100 * player_stats.pie;
         let jersey_num = display_info.jersey;
         let background_logo = get_background_logo_url(display_info.teamAbbreviation);
         let team_color = team_colors[display_info.teamAbbreviation];
-    
+
         $('#banner-first').html(first_name);
         $('#banner-bar').html('|');
         $('#banner-last').html(last_name);
@@ -104,7 +103,7 @@ function set_display_info(data, fgpct) {
         $('#pie').html(Math.round(pie * 10) / 10 + '%');
         $('#banner-position').html(position);
         $('#jersey-num').html(jersey_num);
-        $('#player-banner').css('background-image', 'linear-gradient(to bottom, rgb(' + team_color + ') 0%, rgb('+ team_color + ', 0.5) 50%, transparent 100%), url(' + background_logo + ')');
+        $('#player-banner').css('background-image', 'linear-gradient(to bottom, rgb(' + team_color + ') 0%, rgb(' + team_color + ', 0.5) 50%, transparent 100%), url(' + background_logo + ')');
         $('#player-banner').css('background-color', 'rgb(' + team_color + ')');
 
         $('.team-info').css('display', 'none');
@@ -116,7 +115,7 @@ function set_display_info(data, fgpct) {
 
 function create_shot_list_from_map(heat_map) {
     let shot_data = [];
-    for (let i = 7*partitions; i <= num_cells - 2*partitions; ++i) {
+    for (let i = 7 * partitions; i <= num_cells - 2 * partitions; ++i) {
         shot_data.push(heat_map[i]);
     }
     return shot_data;
@@ -126,7 +125,7 @@ function add_tooltip(percent, shots, cell, league_avg) {
     if (percent != -1) {
         let tooltip = document.createElement('span');
         tooltip.classList.add('tooltiptext');
-        tooltip.innerHTML =  shots.made + '/' + (shots.made + shots.missed) + ', ' + Math.round(percent*100) + '%';
+        tooltip.innerHTML = shots.made + '/' + (shots.made + shots.missed) + ', ' + Math.round(percent * 100) + '%';
         if (league_avg != undefined) {
             tooltip.innerHTML += '<br> League Avg: ' + Math.round(100 * league_avg.fgPct) + '%';
         }
@@ -135,17 +134,17 @@ function add_tooltip(percent, shots, cell, league_avg) {
 }
 
 function get_shot_chart(search_name, season, season_type, chart_type) {
-    $.ajax({ 
+    $.ajax({
         url: '/shotchart',
         type: 'POST',
-        cache: false, 
+        cache: false,
         data: {
             name: search_name,
             season: season,
             season_type: season_type,
             chart_type: chart_type
-        }, 
-        success: function(data){
+        },
+        success: function(data) {
             $('#loader').hide();
             $('#load-msg').show();
             $('.tooltiptext').remove();
@@ -174,7 +173,7 @@ function get_shot_chart(search_name, season, season_type, chart_type) {
                 }
             }
 
-            let avg_shots_per_region = total_shots/regions_with_shots;
+            let avg_shots_per_region = total_shots / regions_with_shots;
 
             let shots_taken = 0;
             let shots_made = 0;
@@ -183,7 +182,7 @@ function get_shot_chart(search_name, season, season_type, chart_type) {
                 let row = chart.children[i];
                 for (let j = 0; j < row.children.length; ++j) {
                     let cell = row.children[j];
-                    let shots = shot_data[i*partitions + j + 1];
+                    let shots = shot_data[i * partitions + j + 1];
                     let percent = (shots.total < 2) ? -1 : shots.made / shots.total;
                     let league_avg = league_averages[shots.area];
 
@@ -196,9 +195,9 @@ function get_shot_chart(search_name, season, season_type, chart_type) {
                 }
             }
 
-            set_display_info(data, 100*shots_made/shots_taken);
+            set_display_info(data, 100 * shots_made / shots_taken);
         },
-        error: function(jqXHR, textStatus, err){
+        error: function(jqXHR, textStatus, err) {
             console.error("Error: ", jqXHR.status, jqXHR.responseText, textStatus, err);
             $('#loader').hide();
             $('#load-msg').html(jqXHR.responseText);
@@ -213,12 +212,12 @@ $(document).on('keypress', (ev) => {
         $('#loader').show();
         $('#load-msg').html('Creating chart...');
         $('#load-msg').show();
-    
+
         let search_name = $('#search-name').val()
         let season = $('#season').val();
         let season_type = $('#season-type').val();
         let chart_type = $('#chart-type').val();
-        
+
         get_shot_chart(search_name, season, season_type, chart_type);
     }
 })

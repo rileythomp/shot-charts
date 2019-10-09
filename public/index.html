@@ -1,85 +1,78 @@
 <html>
-    <head>
-        <link rel="shortcut icon" type="image/png" href="./assets/bball.png"/>
-        <title>NBA Shot Charts</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-        <link rel="stylesheet" href="stylesheet.css">
-    </head>
-    <body>
-        <div id='player-banner' class='flex-container'>
-            <div>
-                <a id='nba-link' target='blank'><img draggable='false' id="headshot" onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png';"></a>
-            </div>
-            <div id='banner-info'>
-                    <p>
-                        <span id='jersey-num'></span>
-                        <span id='banner-bar'>|</span>
-                        <span id='banner-position'></span>
-                    </p>
-                    <p id='banner-first' class="banner-name nba-player-header__first-name">Steven</p>
-                    <p id='banner-last' class="banner-name nba-player-header__last-name">Adams</p>
-            </div>
-            <div class='banner-stats'>
-                <p class='player-info'>PTS: <span id="pts"></span></p>
-                <p class='player-info'>AST: <span id="ast"></span></p>
-                <p class='player-info'>REB: <span id="reb"></span></p>
-                <p>FG %: <span id="fgpct"></span></p>
-                <p class='player-info'>PIE: <span id="pie"></span></p>
-                <p class='team-info' id='conference'></p>
-                <p class='team-info' id='division'></p>
-            </div>
-        </div>
-
-        <div class="grid-container">
-            <div id="chart-wrapper">
-                <table id="chart">
-
-                </table>
-            </div>
-        </div>
-
-        <div id="form-wrapper">
-            <form id="chart-form">
-                <input id="search-name" type="text" placeholder="Search by player or team">
-
-                <select id="season">
-                    <option value="2018-19">2018-19</option>
-                    <option value="2017-18">2017-18</option>
-                    <option value="2016-17">2016-17</option>
-                    <option value="2015-16">2015-16</option>
-                    <option value="2014-15">2014-15</option>
-                    <option value="2013-14">2013-14</option>
-                    <option value="2012-13">2012-13</option>
-                    <option value="2011-12">2011-12</option>
-                    <option value="2010-11">2010-11</option>
-                    <option value="2009-10">2009-10</option>
-                    <option value="2008-09">2008-09</option>
-                    <option value="2007-08">2007-08</option>
-                    <option value="2006-07">2006-07</option>
-                    <option value="2005-06">2005-06</option>
-                    <option value="2004-05">2004-05</option>
-                    <option value="2003-04">2003-04</option>
-                </select>
-
-                <select id="season-type">
-                    <option value="Regular Season">Regular Season</option>
-                    <option value="Playoffs">Playoffs</option>
-                </select>
-
-                <select id="chart-type">
-                    <option value="absolute">Absolute FG%</option>
-                    <option value="relative">Relative FG%</option>
-                    <option value="frequency">Frequency</option>
-                </select>
-            </form>
-
-            <p id="load-msg"></p>
-            <div id="loader"></div>
-        </div>
-    </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="js/html2canvas.min.js"></script>
-    <script src="js/colors.js"></script>
-    <script src="js/save_chart.js"></script>
-    <script src="js/main.js"></script>
+   <head>
+      <link rel="shortcut icon" type="image/png" href="./assets/bball.png"/>
+      <title>NBA Shot Charts</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+      <link rel="stylesheet" href="stylesheet.css">
+   </head>
+   <body>
+      <div id='player-banner' class='flex-container'>
+         <div>
+            <a id='nba-link' target='blank'><img draggable='false' id="headshot" onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png';"></a>
+         </div>
+         <div id='banner-info'>
+            <p>
+               <span id='jersey-num'></span>
+               <span id='banner-bar'>|</span>
+               <span id='banner-position'></span>
+            </p>
+            <p id='banner-first' class="banner-name nba-player-header__first-name">Steven</p>
+            <p id='banner-last' class="banner-name nba-player-header__last-name">Adams</p>
+         </div>
+         <div class='banner-stats'>
+            <p class='player-info'>PTS: <span id="pts"></span></p>
+            <p class='player-info'>AST: <span id="ast"></span></p>
+            <p class='player-info'>REB: <span id="reb"></span></p>
+            <p>FG %: <span id="fgpct"></span></p>
+            <p class='player-info'>PIE: <span id="pie"></span></p>
+            <p class='team-info' id='conference'></p>
+            <p class='team-info' id='division'></p>
+         </div>
+      </div>
+      <div class="grid-container">
+         <div id="chart-wrapper">
+            <table id="chart">
+            </table>
+         </div>
+      </div>
+      <div id="form-wrapper">
+         <form id="chart-form">
+            <input id="search-name" type="text" placeholder="Search by player or team">
+            <select id="season">
+               <option value="2018-19">2018-19</option>
+               <option value="2017-18">2017-18</option>
+               <option value="2016-17">2016-17</option>
+               <option value="2015-16">2015-16</option>
+               <option value="2014-15">2014-15</option>
+               <option value="2013-14">2013-14</option>
+               <option value="2012-13">2012-13</option>
+               <option value="2011-12">2011-12</option>
+               <option value="2010-11">2010-11</option>
+               <option value="2009-10">2009-10</option>
+               <option value="2008-09">2008-09</option>
+               <option value="2007-08">2007-08</option>
+               <option value="2006-07">2006-07</option>
+               <option value="2005-06">2005-06</option>
+               <option value="2004-05">2004-05</option>
+               <option value="2003-04">2003-04</option>
+            </select>
+            <select id="season-type">
+               <option value="Regular Season">Regular Season</option>
+               <option value="Playoffs">Playoffs</option>
+            </select>
+            <select id="chart-type">
+               <option value="absolute">Absolute FG%</option>
+               <option value="relative">Relative FG%</option>
+               <option value="frequency">Frequency</option>
+            </select>
+         </form>
+         <p id="load-msg"></p>
+         <div id="loader"></div>
+      </div>
+   </body>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="js/html2canvas.min.js"></script>
+   <script src="js/colors.js"></script>
+   <script src="js/save_chart.js"></script>
+   <script src="js/main.js"></script>
 </html>
