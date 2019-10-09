@@ -14,7 +14,7 @@ function save_chart(uri, file_name) {
 $('#save-button').on('click', function(e) {
     e.preventDefault();
 
-    let chart_name = $('#name').text();
+    let chart_name = $('#banner-first').text() + ' ' + $('#banner-last').text();
 
     if (chart_name == '') {
         $('#load-msg').html('No player selected');

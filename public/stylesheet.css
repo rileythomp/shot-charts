@@ -116,24 +116,22 @@ td {
     height: .9em;
 }
 
-#save-button {
-    height: 2em;
-    position: absolute;
-    bottom: 0;
-}
-
-input,select {
+input,select, button {
     height: 3em;
     font-size: 1em;
 }
 
 input {
     padding-left: .5em;
-    width: 41%;
+    width: 30%;
 }
 
 select {
-    width: 19%;
+    width: 20%;
+}
+
+button {
+    width: 7%;
 }
 
 #form-wrapper {
