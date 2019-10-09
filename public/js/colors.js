@@ -31,6 +31,13 @@ const team_colors = {
   'WAS': '207,20,43'
 }
 
+function get_team_color(data) {
+    if (data.display_info.commonPlayerInfo == undefined) {
+        return team_colors[data.display_info.teamInfoCommon[0].teamAbbreviation];
+    }
+    return team_colors[data.display_info.commonPlayerInfo[0].teamAbbreviation];
+}
+
 function color_from_absolute(percent) {
   if (percent < 0) {
       return 'rgb(222, 184, 135)';

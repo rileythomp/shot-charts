@@ -37,8 +37,20 @@ function get_nba_url(info) {
     }
 }
 
-function get_background_logo_url(abbr) {
-    return 'https://www.nba.com/assets/logos/teams/primary/web/' + abbr + '.svg';
+function get_background_logo_url(info) {
+    if (info.commonPlayerInfo == undefined) {
+        return 'https://www.nba.com/assets/logos/teams/primary/web/' + info.teamInfoCommon[0].teamAbbreviation + '.svg';
+    }
+    return 'https://www.nba.com/assets/logos/teams/primary/web/' + info.commonPlayerInfo[0].teamAbbreviation + '.svg';
+}
+
+function get_player_position(position) {
+    let positions = position.split('-');
+    if (positions.length == 1) {
+        return positions[0][0];
+    } else {
+        return positions[0][0] + '-' + positions[1][0];
+    }
 }
 
 function set_display_info(data, fgpct) {
@@ -47,21 +59,20 @@ function set_display_info(data, fgpct) {
     let first_name = get_display_name(data.display_info, true);
     let last_name = get_display_name(data.display_info, false);
     let nba_url = get_nba_url(data.display_info);
+    let team_color = get_team_color(data);
+    let background_logo = get_background_logo_url(data.display_info);
 
     $('#headshot').attr('src', data.img_url);
     $('#nba-link').attr('href', nba_url);
 
     $('#fgpct').html(Math.round(fgpct * 10) / 10 + '%');
 
+    $('#player-banner').css('background-image', 'linear-gradient(to bottom, rgb(' + team_color + ') 0%, rgb(' + team_color + ', 0.5) 50%, transparent 100%), url(' + background_logo + ')');
+    $('#player-banner').css('background-color', 'rgb(' + team_color + ')');
+
     if (data.display_info.commonPlayerInfo == undefined) {
         let conference = data.display_info.teamInfoCommon[0].teamConference;
         let division = data.display_info.teamInfoCommon[0].teamDivision;
-        let background_logo = get_background_logo_url(data.display_info.teamInfoCommon[0].teamAbbreviation);
-        let team_color = team_colors[data.display_info.teamInfoCommon[0].teamAbbreviation];
-
-
-        $('#player-banner').css('background-image', 'linear-gradient(to bottom, rgb(' + team_color + ') 0%, rgb(' + team_color + ', 0.5) 50%, transparent 100%), url(' + background_logo + ')');
-        $('#player-banner').css('background-color', 'rgb(' + team_color + ')');
 
         $('#banner-first').html('');
         $('#banner-position').html('');
@@ -76,35 +87,22 @@ function set_display_info(data, fgpct) {
     } else {
         let display_info = data.display_info.commonPlayerInfo[0];
         let player_stats = data.display_info.playerHeadlineStats[0];
-        let player_city = display_info.teamCity;
-        let player_team = display_info.teamName;
-        let positions = display_info.position.split('-');
-        let position;
-        if (positions.length == 1) {
-            position = positions[0][0];
-        } else {
-            position = positions[0][0] + '-' + positions[1][0];
-        }
+        let position = get_player_position(display_info.position);
         let pts = player_stats.pts;
         let ast = player_stats.ast;
         let reb = player_stats.reb;
         let pie = 100 * player_stats.pie;
         let jersey_num = display_info.jersey;
-        let background_logo = get_background_logo_url(display_info.teamAbbreviation);
-        let team_color = team_colors[display_info.teamAbbreviation];
 
         $('#banner-first').html(first_name);
         $('#banner-bar').html('|');
         $('#banner-last').html(last_name);
-        $('#team').html(player_city + ' ' + player_team);
         $('#pts').html(pts);
         $('#reb').html(reb);
         $('#ast').html(ast);
         $('#pie').html(Math.round(pie * 10) / 10 + '%');
         $('#banner-position').html(position);
         $('#jersey-num').html(jersey_num);
-        $('#player-banner').css('background-image', 'linear-gradient(to bottom, rgb(' + team_color + ') 0%, rgb(' + team_color + ', 0.5) 50%, transparent 100%), url(' + background_logo + ')');
-        $('#player-banner').css('background-color', 'rgb(' + team_color + ')');
 
         $('.team-info').css('display', 'none');
         $('.player-info').css('display', '');
