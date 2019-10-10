@@ -109,14 +109,6 @@ function set_display_info(data, fgpct) {
     $('#player-info-wrapper').css('visibility', 'visible');
 }
 
-function create_shot_list_from_map(heat_map) {
-    let shot_data = [];
-    for (let i = 7 * partitions; i <= num_cells - 2 * partitions; ++i) {
-        shot_data.push(heat_map[i]);
-    }
-    return shot_data;
-}
-
 function add_tooltip(percent, shots, cell, league_avg) {
     if (percent != -1) {
         let tooltip = document.createElement('span');
@@ -127,6 +119,14 @@ function add_tooltip(percent, shots, cell, league_avg) {
         }
         cell.appendChild(tooltip);
     }
+}
+
+function create_shot_list_from_map(heat_map) {
+    let shot_data = [];
+    for (let i = 7 * partitions; i <= num_cells - 2 * partitions; ++i) {
+        shot_data.push(heat_map[i]);
+    }
+    return shot_data;
 }
 
 function create_chart(shot_data, league_averages, chart_type, avg_shots_per_region, max, min) {
