@@ -8,23 +8,23 @@
    <body>
       <div id='player-banner' class='flex-container'>
          <div>
-            <a id='nba-link' target='blank'><img draggable='false' id='headshot' onError='this.src="https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png";'></a>
+            <a id='nba-link' target='blank'><img draggable='false' id='headshot' src='https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/201142.png' onError='this.src="https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png";'></a>
          </div>
          <div id='banner-info'>
             <p>
-               <span id='jersey-num'></span>
+               <span id='jersey-num'>7</span>
                <span id='banner-bar'>|</span>
-               <span id='banner-position'></span>
+               <span id='banner-position'>F</span>
             </p>
-            <p id='banner-first' class='banner-name nba-player-header__first-name'></p>
-            <p id='banner-last' class='banner-name nba-player-header__last-name'></p>
+            <p id='banner-first' class='banner-name nba-player-header__first-name'>Kevin</p>
+            <p id='banner-last' class='banner-name nba-player-header__last-name'>Durant</p>
          </div>
          <div class='banner-stats'>
-            <p class='player-info'>PTS: <span id='pts'></span></p>
-            <p class='player-info'>AST: <span id='ast'></span></p>
-            <p class='player-info'>REB: <span id='reb'></span></p>
-            <p>FG %: <span id='fgpct'></span></p>
-            <p class='player-info'>PIE: <span id='pie'></span></p>
+            <p class='player-info'>PTS: <span id='pts'>26</span></p>
+            <p class='player-info'>AST: <span id='ast'>5.9</span></p>
+            <p class='player-info'>REB: <span id='reb'>6.4</span></p>
+            <p>FG %: <span id='fgpct'>52.1%</span></p>
+            <p class='player-info'>PIE: <span id='pie'>16.2%</span></p>
             <p class='team-info' id='conference'></p>
             <p class='team-info' id='division'></p>
          </div>
@@ -75,5 +75,6 @@
    <script src='js/html2canvas.min.js'></script>
    <script src='js/colors.js'></script>
    <script src='js/save_chart.js'></script>
+   <script src='js/durant.js'></script>
    <script src='js/main.js'></script>
 </html>

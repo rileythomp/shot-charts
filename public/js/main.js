@@ -1,5 +1,3 @@
-document.getElementsByTagName('html')[0].style.visibility = 'hidden';
-
 let chart = document.getElementById('chart');
 const partitions = 50;
 const num_cells = partitions * partitions;
@@ -131,6 +129,31 @@ function add_tooltip(percent, shots, cell, league_avg) {
     }
 }
 
+function create_chart(shot_data, league_averages, chart_type, avg_shots_per_region, max, min) {
+    let shots_taken = 0;
+    let shots_made = 0;
+
+    for (let i = 0; i < chart.children.length; ++i) {
+        let row = chart.children[i];
+        for (let j = 0; j < row.children.length; ++j) {
+            let cell = row.children[j];
+            let shots = shot_data[i * partitions + j + 1];
+            let percent = (shots.total < 2) ? -1 : shots.made / shots.total;
+            let league_avg = league_averages[shots.area];
+
+
+            shots_taken += shots.total;
+            shots_made += shots.made;
+
+            cell.style.backgroundColor = set_cell_color(chart_type, percent, avg_shots_per_region, max, min, shots.total, league_avg);
+
+            add_tooltip(percent, shots, cell, league_avg);
+        }
+    }
+
+    return 100 * shots_made / shots_taken;
+}
+
 function get_shot_chart(search_name, season, season_type, chart_type) {
     $.ajax({
         url: '/shotchart',
@@ -152,7 +175,6 @@ function get_shot_chart(search_name, season, season_type, chart_type) {
             let chart_type = data.chart_type;
 
             let shot_data = create_shot_list_from_map(heat_map);
-
             let total_shots = 0;
             let regions_with_shots = 0;
             let max = shot_data[0].total;
@@ -173,27 +195,10 @@ function get_shot_chart(search_name, season, season_type, chart_type) {
 
             let avg_shots_per_region = total_shots / regions_with_shots;
 
-            let shots_taken = 0;
-            let shots_made = 0;
+            // create_chart has side effect of creating the table, but it also return the fgpct
+            let fgpct = create_chart(shot_data, league_averages, chart_type, avg_shots_per_region, max, min)
 
-            for (let i = 0; i < chart.children.length; ++i) {
-                let row = chart.children[i];
-                for (let j = 0; j < row.children.length; ++j) {
-                    let cell = row.children[j];
-                    let shots = shot_data[i * partitions + j + 1];
-                    let percent = (shots.total < 2) ? -1 : shots.made / shots.total;
-                    let league_avg = league_averages[shots.area];
-
-                    shots_taken += shots.total;
-                    shots_made += shots.made;
-
-                    cell.style.backgroundColor = set_cell_color(chart_type, percent, avg_shots_per_region, max, min, shots.total, league_avg);
-
-                    add_tooltip(percent, shots, cell, league_avg);
-                }
-            }
-
-            set_display_info(data, 100 * shots_made / shots_taken);
+            set_display_info(data, fgpct);
         },
         error: function(jqXHR, textStatus, err) {
             console.error("Error: ", jqXHR.status, jqXHR.responseText, textStatus, err);
@@ -202,6 +207,10 @@ function get_shot_chart(search_name, season, season_type, chart_type) {
         }
     })
 }
+
+$(window).on('load', () => {
+    create_chart(durant_shots, [], 'absolute', 0,0,0);
+})
 
 $(document).on('keypress', (ev) => {
     if (ev.which == 13) {
@@ -218,9 +227,4 @@ $(document).on('keypress', (ev) => {
 
         get_shot_chart(search_name, season, season_type, chart_type);
     }
-})
-
-$(window).on('load', () => {
-    get_shot_chart('durant', '2018-19', 'Regular Season', 'absolute');
-    document.getElementsByTagName('html')[0].style.visibility = 'visible';
 })

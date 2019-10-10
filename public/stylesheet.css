@@ -11,6 +11,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    background-image: linear-gradient(to bottom, rgb(0,0,0) 0%, rgb(0,0,0, 0.5) 50%, transparent 100%), url(https://www.nba.com/assets/logos/teams/primary/web/BKN.svg);
+    background-color: rgb(0,0,0);
 }
 
 body {
@@ -93,15 +95,6 @@ h2 {
     background-image: url(assets/the_court.jpg);
     border: 1px solid #000;
     margin: .5em auto;
-}
-
-#player-info-wrapper {
-    position: relative;
-    visibility: hidden;
-}
-
-#player-info-wrapper p {
-    margin: .75em auto;
 }
 
 #name {
