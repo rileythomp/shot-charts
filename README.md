@@ -8,7 +8,7 @@ Search for both NBA player and team shot charts. Option to select the season and
 
 Built with:
  * Javascript, Node, Express, jQuery
- * The nba npm module for raw shot data and statistics
+ * The nba npm module (https://www.npmjs.com/package/nba) for raw shot data and statistics
 
 To run locally:
 
